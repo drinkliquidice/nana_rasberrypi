@@ -22,3 +22,5 @@ interval = 1
 audio = "speaking.wav"
 quiet_threshold = 20
 
+# Recording Constants
+recording_file = "questions"

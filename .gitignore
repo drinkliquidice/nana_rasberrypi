@@ -1,7 +1,3 @@
 data.json
 **/__pycache__/
-entities.json
-speaking.wav
-stutters.json
-transcriptions.txt
-speakersep.json
+outputs/
