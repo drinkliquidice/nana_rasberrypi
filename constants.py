@@ -1,12 +1,14 @@
 import assemblyai as aai
 import pyaudio
 
+result_folder = "outputs"
+
 # AssemblyAI Constants
 speech_model = aai.SpeechModel.nano
-config = aai.TranscriptionConfig(speech_model=speech_model, disfluencies=True)
+config = aai.TranscriptionConfig(speech_model=speech_model, disfluencies=True, entity_detection=True, )
 audiofile = "https://assembly.ai/wildfires.mp3"
-transcription_result_folder = "outputs"
 transcription_name = "transcriptions.txt"
+entity_name = "entities.json"
 
 # Audio Constants
 chunk = 1024
@@ -15,6 +17,6 @@ channels = 1
 fs = 44100 
 chunk_duration = chunk/fs                        
 interval = 1                      
-file_folder = "outputs"
-name = "speaking.wav"
+audio = "speaking.wav"
 quiet_threshold = 20
+

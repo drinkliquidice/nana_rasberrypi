@@ -1,7 +1,7 @@
 from pydub import AudioSegment
 from pydub.silence import detect_silence
 
-def analyze_silence_pydub(wav_file, silence_thresh=-40, min_silence_len=500):
+def analyze_silence(wav_file, silence_thresh=-50, min_silence_len=500):
     audio = AudioSegment.from_wav(wav_file)
     
     # Detect silent segments
