@@ -7,3 +7,4 @@ import os
 file_name = os.path.join(c.file_folder, c.name)
 ar.record_audio(file_name)
 stt.transcribe_audio("./" + file_name)  
+

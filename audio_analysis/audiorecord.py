@@ -30,7 +30,6 @@ def record_audio(file_name):
 
     stream.start_stream()
 
-
     while(shouldrun):
         time.sleep(0.1)
         text = input("Stop recording?:")
@@ -47,4 +46,4 @@ def record_audio(file_name):
     wf.setsampwidth(p.get_sample_size(c.sample_format))
     wf.setframerate(c.fs)
     wf.writeframes(b''.join(frames))
-    wf.close
+    wf.close()
