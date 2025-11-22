@@ -5,10 +5,12 @@ result_folder = "outputs"
 
 # AssemblyAI Constants
 speech_model = aai.SpeechModel.nano
-config = aai.TranscriptionConfig(speech_model=speech_model, disfluencies=True, entity_detection=True, )
+config = aai.TranscriptionConfig(speech_model=speech_model, disfluencies=True, entity_detection=True, speaker_labels=True)
 audiofile = "https://assembly.ai/wildfires.mp3"
 transcription_name = "transcriptions.txt"
 entity_name = "entities.json"
+stutter_name = "stutters.json"
+speaker_name = "speakersep.json"
 
 # Audio Constants
 chunk = 1024

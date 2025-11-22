@@ -9,10 +9,8 @@ import json
 frames = []
 
 def callback(in_data, frame_count, time_info, status):
-        frames.append(in_data)
-        data = np.frombuffer(in_data, dtype=np.int16)
-        print(np.amax(data))
-        return (in_data, pyaudio.paContinue)
+    frames.append(in_data)
+    return (in_data, pyaudio.paContinue)
 
 
 def record_audio(file_name):
