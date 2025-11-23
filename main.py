@@ -88,10 +88,10 @@ async def question_protocol(question):
 
 async def main():
     input("Press ENTER to start the code...")
-
-    await question_protocol("name_dob")
-    await question_protocol("why_in_hospital")
-    a = await question_protocol("address")
+    a = 0
+    a += await question_protocol("name_dob")
+    a += await question_protocol("why_in_hospital")
+    a += await question_protocol("address")
     await question_protocol("how_is_day")
 
     data = os.path.join(c.result_folder, "results.json")
@@ -99,8 +99,8 @@ async def main():
     if a >= 4:
         name = json.load(open("outputs/name_dob_entity.json"))[0]
         dob = json.load(open("outputs/name_dob_entity.json"))[1]
-        why_in_hospital = json.load(open("outputs/why_in_hospital_entity.json"))[2]
-        address = json.load(open("outputs/address_entity.json"))[3]
+        why_in_hospital = json.load(open("outputs/why_in_hospital_entity.json"))[0]
+        address = json.load(open("outputs/address_entity.json"))[0]
 
         pause_data = pd.analyze_silence("outputs/how_is_day.wav")
         stutter_data = json.load(open("outputs/how_is_day_stutter.json"))
