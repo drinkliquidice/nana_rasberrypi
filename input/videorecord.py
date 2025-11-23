@@ -1,63 +1,25 @@
 import cv2
-import threading
-import time
+import asyncio
 
-class VideoRecorder(threading.Thread):
-    def __init__(self, filename="output.avi", fps=20, resolution=(640, 480)):
-        super().__init__()
-        self.filename = filename
-        self.fps = fps
-        self.resolution = resolution
-        self.cap = cv2.VideoCapture(0)  # 0 for default webcam
-        self.fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        self.out = cv2.VideoWriter(self.filename, self.fourcc, self.fps, self.resolution)
-        self.running = True
+async def record_video(filename, stop_event: asyncio.Event):
+    cap = cv2.VideoCapture(0)
 
-    def run(self):
-        while self.running:
-            ret, frame = self.cap.read()
-            if ret:
-                self.out.write(frame)
-            time.sleep(1 / self.fps)  # Control frame rate
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    out = cv2.VideoWriter(filename, fourcc, 20.0, (640, 480))
 
-    def stop(self):
-        self.running = False
-        self.cap.release()
-        self.out.release()
+    print("Video recording started...")
 
+    while not stop_event.is_set():
+        ret, frame = cap.read()
+        if not ret:
+            break
+        out.write(frame)
 
-    def merge_videos(video_files, output_file):
-        if not video_files:
-            print("No video files to merge.")
-            return
+        cv2.imshow("Recording Preview", frame)
+        cv2.waitKey(1)
+        await asyncio.sleep(0.01)  # allows fast stop response
 
-        cap = cv2.VideoCapture(video_files[0])
-        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        fps = cap.get(cv2.CAP_PROP_FPS)
-        width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        cap.release()
-
-        out = cv2.VideoWriter(output_file, fourcc, fps, (width, height))
-
-        for file in video_files:
-            cap = cv2.VideoCapture(file)
-            while True:
-                ret, frame = cap.read()
-                if not ret:
-                    break
-                out.write(frame)
-            cap.release()
-
-        out.release()
-
-
-
-
-
-
-
-    
-
-
-
+    cap.release()
+    out.release()
+    cv2.destroyAllWindows()
+    print("Video recording stopped")
