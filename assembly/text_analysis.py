@@ -31,10 +31,14 @@ def entity_analysis(transcript, output_filename):
         }
         for entity in transcript.entities
     ]
+    count = 0
+    for entity in entities_data:
+        count += 1
     with open(output_filename + "_entity.json", 'w') as f:
             json.dump(entities_data, f, indent=4)
     entities_data.clear()
     print("Entities found!")
+    return count
 
 def stutter_count(transcript, output_filename):
     words = ["uh", "um", "mm"]
