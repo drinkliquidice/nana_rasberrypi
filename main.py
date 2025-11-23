@@ -3,7 +3,9 @@ import assembly.text_analysis as sta
 import input.pause_detection as pd
 import input.playaudio as pa
 import input.sendtowebsite as sw
-import constants as c 
+import constants as c
+import input.simon_says as ss 
+import time
 import json
 import os
 
@@ -44,3 +46,10 @@ else:
         json.dump({"error": "Not enough entities found"}, f, indent=4)
 
 sw.send_to_website(data)
+
+input("Press ENTER to start the game...")
+while True:
+    ss.idle_mode()
+    time.sleep(1)
+    score = ss.play_game()
+    print("Final score this game:", score)
