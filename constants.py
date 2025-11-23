@@ -11,6 +11,7 @@ transcription_name = "transcriptions.txt"
 entity_name = "entities.json"
 stutter_name = "stutters.json"
 speaker_name = "speakersep.json"
+question_folder = "questions"
 
 # Audio Constants
 chunk = 1024

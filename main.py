@@ -1,13 +1,13 @@
 import input.audiorecord as ar
 import assembly.text_analysis as sta
 import input.pause_detection as pd
-import constants as c
-from playsound import playsound
+import input.playaudio as pa
+import constants as c 
 import json
 import os
 
 def question_protocol(question):
-    playsound("questions/" + question + ".mp3")
+    pa.play_audio(os.path.join(c.question_folder, question + ".mp3"))
     audio_file = question +".wav"
     ar.record_audio(os.path.join(c.result_folder, audio_file))
     transcription = sta.transcribe_audio(os.path.join(c.result_folder, audio_file), question)

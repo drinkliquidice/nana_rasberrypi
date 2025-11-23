@@ -7,3 +7,5 @@ def merge_video_audio(video_path, audio_path, output_path):
 
     final = video.set_audio(audio)
     final.write_videofile(output_path, codec="libx264", audio_codec="aac")
+
+    
