@@ -2,18 +2,16 @@ import assemblyai as aai
 import constants as c
 import os
 import json
-import requests
-import time 
 
 with open('data.json') as f:
     aai.settings.api_key = json.load(f)['aai_api_key']
 
 
-def transcribe_audio(audio_file):
+def transcribe_audio(audio_file, file):
     transcriber = aai.Transcriber(config=c.config)
     transcript = transcriber.transcribe(audio_file)
     if transcript.status == "completed":
-        file_name = os.path.join(c.result_folder, c.transcription_name)
+        file_name = os.path.join(c.result_folder, file + ".txt")
         paragraphs = transcript.get_paragraphs()
         with open(file_name, "w") as f:
             for paragraph in paragraphs:
@@ -23,8 +21,7 @@ def transcribe_audio(audio_file):
         print("Error: ", transcript.error)
     return transcript
 
-def entity_analysis(transcript):
-    output_filename = os.path.join(c.result_folder, c.entity_name)
+def entity_analysis(transcript, output_filename):
     entities_data = [
         {
             "text": entity.text,
@@ -34,13 +31,12 @@ def entity_analysis(transcript):
         }
         for entity in transcript.entities
     ]
-    with open(output_filename, 'w') as f:
+    with open(output_filename + "_entity.json", 'w') as f:
             json.dump(entities_data, f, indent=4)
-
+    entities_data.clear()
     print("Entities found!")
 
-def stutter_count(transcript):
-    output_filename = os.path.join(c.result_folder, c.stutter_name)
+def stutter_count(transcript, output_filename):
     words = ["uh", "um", "mm"]
     stutter_data = [
         {
@@ -49,25 +45,7 @@ def stutter_count(transcript):
         }
         for match in transcript.word_search(words)
     ]
-    with open(output_filename, 'w') as f:
+    with open(output_filename + "_stutter.json", 'w') as f:
         json.dump(stutter_data, f, indent=4)
-
+    stutter_data.clear()
     print("Stutter Data Finished!")
-
-def speaker_seperation(transcript):
-    output_filename = os.path.join(c.result_folder, c.speaker_name)
-
-    speaker_data = [
-        {
-            "speaker": utterance.speaker,
-            "text": utterance.text,
-            "start": utterance.start,
-            "end": utterance.end
-        }
-        for utterance in transcript.utterances
-    ]
-
-    with open(output_filename, 'w') as f:
-        json.dump(speaker_data, f, indent=4)
-
-    print("Speaker separation data finished!")

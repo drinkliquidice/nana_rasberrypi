@@ -28,10 +28,12 @@ def record_audio(file_name):
 
     stream.start_stream()
 
+    seconds = 0
     while(shouldrun):
         time.sleep(0.1)
+        seconds += 0.1
         text = input("Stop recording?:")
-        if(text.lower() == "s"):
+        if(text.lower() == "s" or seconds >= 10):
             shouldrun = False
 
     stream.stop_stream()
