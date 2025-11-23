@@ -2,6 +2,7 @@ import input.audiorecord as ar
 import assembly.text_analysis as sta
 import input.pause_detection as pd
 import input.playaudio as pa
+import input.sendtowebsite as sw
 import constants as c 
 import json
 import os
@@ -41,3 +42,5 @@ if (a >= 4):
 else:
     with open(data, 'w') as f:
         json.dump({"error": "Not enough entities found"}, f, indent=4)
+
+sw.send_to_website(data)
